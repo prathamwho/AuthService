@@ -1,8 +1,6 @@
-cat << 'EOF' > README.md
-
 # User Authentication and Role Management Service
 
-A robust backend service for user authentication, authorization, and role-based access control (RBAC), built with Node.js, Express, and Sequelize.
+A robust backend service for user authentication, authorization, and role-based access control (RBAC), built with Node.js, Express, and Sequelize. (Part II of the Airline Management System)
 
 ---
 
@@ -84,6 +82,7 @@ Follow these steps to get the project running on your local machine.
 ### 5. Running the Server
 
 - Start the server (this will typically use `nodemon` for development if configured in `package.json`):
+
   ```bash
   npm start
   ```
