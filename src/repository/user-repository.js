@@ -1,4 +1,3 @@
-const { where } = require('sequelize');
 const { User, Role } = require('../models/index');
 const ValidationError = require('../utils/validation-error');
 const ClientError = require('../utils/client-error');
@@ -59,11 +58,10 @@ class UserRepository {
                     'Invalid Email sent in the request',
                     'Please check the email, as there is no record of the email',
                     StatusCodes.NOT_FOUND
-                )
+                );
             }
             return user;
         } catch (error) {
-            console.log(error);
             console.log("Something went wrong on repository layer");
             throw error;
         }
@@ -77,6 +75,7 @@ class UserRepository {
                     name: 'ADMIN'
                 }
             });
+            // Add remaining logic here
         } catch (error) {
             console.log("Something went wrong in the repository layer");
             throw error;
