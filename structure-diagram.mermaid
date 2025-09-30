@@ -1,0 +1,25 @@
+erDiagram
+    USERS {
+        int id PK
+        string email UK "Must be a valid email format"
+        string password "Stored as a hash"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    ROLES {
+        int id PK
+        string name "e.g., ADMIN, CUSTOMER"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    USER_ROLES {
+        int userId FK "Foreign key to USERS table"
+        int roleId FK "Foreign key to ROLES table"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    USERS ||--|{ USER_ROLES : "has"
+    ROLES ||--|{ USER_ROLES : "is part of"

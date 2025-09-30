@@ -1,6 +1,8 @@
 # User Authentication and Role Management Service
 
 A robust backend service for user authentication, authorization, and role-based access control (RBAC), built with Node.js, Express, and Sequelize. (Part II of the Airline Management System)
+![structure](./structure.png)
+
 
 ---
 
