@@ -2,6 +2,7 @@ const UserRepository = require('../repository/user-repository');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { JWT_KEY } = require('../config/serverConfig');
+const AppError = require('../utils/error-handler');
 
 class UserService {
     constructor() {
@@ -12,8 +13,10 @@ class UserService {
         try {
             const user = await this.userRepository.create(data);
             return user;
-        }
-        catch (error) {
+        } catch (error) {
+            if (error.name == 'SequelizeValidationError') {
+                throw error;
+            }
             console.log("Something went wrong in the service layer");
             throw error;
         }
@@ -28,13 +31,13 @@ class UserService {
             // step 2-> compare incoming plain password with stores encrypted password
             const passwordsMatch = this.checkPassword(plainPassword, user.password);
 
-            if(!passwordsMatch) {
+            if (!passwordsMatch) {
                 console.log("Password doesn't match");
-                throw {error: 'Incorrect password'};
+                throw { error: 'Incorrect password' };
             }
 
             // step 3-> if passwords match then create a token and send it to the user
-            const newJWT = this.createToken({email: user.email, id: user.id});
+            const newJWT = this.createToken({ email: user.email, id: user.id });
             return newJWT;
         } catch (error) {
             console.log("Something went wrong in the sign in process");
@@ -45,12 +48,12 @@ class UserService {
     async isAuthenticated(token) {
         try {
             const response = this.verifyToken(token);
-            if(!response) {
-                throw {error: 'Invalid token'}
+            if (!response) {
+                throw { error: 'Invalid token' }
             }
             const user = await this.userRepository.getById(response.id);
-            if(!user) {
-                throw {error: 'No user with the corresponding token exists'};
+            if (!user) {
+                throw { error: 'No user with the corresponding token exists' };
             }
             return user.id;
         } catch (error) {
@@ -90,7 +93,7 @@ class UserService {
         }
     }
 
-    isAdmin(userId){
+    isAdmin(userId) {
         try {
             return this.userRepository.isAdmin(userId);
         } catch (error) {
@@ -98,7 +101,7 @@ class UserService {
             throw error;
         }
     }
-    
+
 
 }
 

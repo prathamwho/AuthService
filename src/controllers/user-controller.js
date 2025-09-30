@@ -1,8 +1,9 @@
-
+const { response } = require('express');
 const UserService = require('../services/user-service');
+
 const userService = new UserService();
 
-const create = async (req, res) => { //signUp
+const create = async (req, res) => {
     try {
         const response = await userService.create({
             email: req.body.email,
@@ -14,15 +15,14 @@ const create = async (req, res) => { //signUp
             data: response,
             err: {}
         });
-    }
-    catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            message: 'Somemthing went wrong',
+    } catch (error) {
+        // console.log(error);
+        return res.status(error.statusCode).json({
+            message: error.message,
             data: {},
             success: false,
-            err: error
-        })
+            err: error.explanation
+        });
     }
 }
 
@@ -67,7 +67,7 @@ const isAuthenticated = async (req, res) => {
     }
 }
 
-const isAdmin = async (req, res) => {
+const isAdmin = async(req, res) => {
     try {
         const response = await userService.isAdmin(req.body.id);
         return res.status(200).json({
@@ -75,7 +75,7 @@ const isAdmin = async (req, res) => {
             err: {},
             success: true,
             message: 'Successfully fetched whether user is admin or not'
-        });
+        })
     } catch (error) {
         console.log(error);
         return res.status(500).json({
