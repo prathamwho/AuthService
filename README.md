@@ -30,7 +30,7 @@ Follow these steps to get the project running on your local machine.
 
 - Clone the project repository:
   ```bash
-  git clone <your-repository-url>
+  git clone git@github.com:prathamwho/AuthService.git
   ```
 - Navigate to the project's root directory:
   ```bash
